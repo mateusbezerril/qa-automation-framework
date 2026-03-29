@@ -1,0 +1,127 @@
+{
+  "info": {
+    "name": "ReqRes API Tests",
+    "description": "Coleção de testes de API REST usando ReqRes como mock server",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "GET List Users",
+          "request": {
+            "method": "GET",
+            "url": "https://reqres.in/api/users?page=1"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => { pm.response.to.have.status(200) })",
+                  "pm.test('Response has data array', () => {",
+                  "  const body = pm.response.json()",
+                  "  pm.expect(body).to.have.property('data')",
+                  "  pm.expect(body.data).to.be.an('array')",
+                  "})"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET Single User",
+          "request": {
+            "method": "GET",
+            "url": "https://reqres.in/api/users/2"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => { pm.response.to.have.status(200) })",
+                  "pm.test('User has correct id', () => {",
+                  "  const body = pm.response.json()",
+                  "  pm.expect(body.data.id).to.eq(2)",
+                  "})"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST Create User",
+          "request": {
+            "method": "POST",
+            "url": "https://reqres.in/api/users",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Mateus QA\", \"job\": \"Senior QA Engineer\"}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 201', () => { pm.response.to.have.status(201) })",
+                  "pm.test('User was created', () => {",
+                  "  const body = pm.response.json()",
+                  "  pm.expect(body.name).to.eq('Mateus QA')",
+                  "  pm.expect(body).to.have.property('id')",
+                  "})"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT Update User",
+          "request": {
+            "method": "PUT",
+            "url": "https://reqres.in/api/users/2",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Mateus Updated\", \"job\": \"Lead QA Engineer\"}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 200', () => { pm.response.to.have.status(200) })",
+                  "pm.test('User was updated', () => {",
+                  "  const body = pm.response.json()",
+                  "  pm.expect(body).to.have.property('updatedAt')",
+                  "})"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "DELETE User",
+          "request": {
+            "method": "DELETE",
+            "url": "https://reqres.in/api/users/2"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Status code is 204', () => { pm.response.to.have.status(204) })"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

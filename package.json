@@ -1,0 +1,28 @@
+{
+  "name": "qa-automation-framework",
+  "version": "1.0.0",
+  "description": "Framework completo de QA Automation com Cypress, Playwright, Newman e BDD",
+  "author": "Mateus Bezerril Pereira",
+  "scripts": {
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run --reporter mochawesome",
+    "playwright:run": "playwright test",
+    "playwright:report": "playwright show-report",
+    "api:run": "newman run api/collection.json -r cli,htmlextra --reporter-htmlextra-export reports/api/index.html",
+    "bdd:run": "cucumber-js",
+    "test:all": "npm run cypress:run && npm run playwright:run && npm run api:run"
+  },
+  "dependencies": {
+    "@cucumber/cucumber": "^10.3.1",
+    "@playwright/test": "^1.43.0",
+    "cypress": "^13.8.0",
+    "newman": "^6.1.2",
+    "newman-reporter-htmlextra": "^1.23.1",
+    "mochawesome": "^7.1.3",
+    "mochawesome-merge": "^4.3.0",
+    "mochawesome-report-generator": "^6.2.0"
+  },
+  "devDependencies": {
+    "chai": "^4.4.1"
+  }
+}
